@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Matemático – CLQ</title>
+    <link rel="stylesheet" href="simulador.css">
+    <!-- Tipografía Poppins para el tutor -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="tutor-page">
+    <!-- Barra de navegación principal -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="assets/logos/clq-logo.png" alt="CLQ" class="logo-img">
+                <span>CLQ</span>
+            </div>
+            <div class="navbar-links">
+                <a href="index.html">Inicio</a>
+                <a href="simulador.html">Simulador</a>
+                <a href="tutor.html" class="active">Tutor</a>
+                <a href="instrucciones.html">Instrucciones</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="faq.html">Preguntas</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+        </div>
+    </nav>
+    <header class="tutor-header">
+        <div class="header-content">
+            <div class="header-emoji" role="img" aria-label="Tutor">🤖</div>
+            <h1>Tutor Matemático CLQ</h1>
+            <p>Plantea tu duda en lenguaje natural y recibe una explicación clara y completa.</p>
+        </div>
+    </header>
+    <main class="tutor-container">
+        <div id="chat" class="chat-window">
+            <!-- Los mensajes se añadirán aquí -->
+        </div>
+        <!-- Botón para limpiar la conversación -->
+        <div class="chat-actions">
+            <button id="clear-chat" class="btn secondary small" type="button">Limpiar conversación</button>
+        </div>
+        <form id="chat-form" class="chat-form" autocomplete="off">
+            <input type="text" id="user-input" placeholder="Escribe tu pregunta o problema..." required>
+            <button type="submit" class="btn">Enviar</button>
+        </form>
+    </main>
+    <!-- Script de tutor incorporado -->
+    <script src="config.js"></script>
+    <script>
+    // Módulo de tutor. Si se dispone de clave OPENAI_API_KEY utilizará la API de ChatGPT.
+    const chatWindow = document.getElementById('chat');
+    const chatForm = document.getElementById('chat-form');
+    const userInput = document.getElementById('user-input');
+
+    // Diccionario de temas con respuestas ejemplo y sugerencias de práctica
+    const tutorTopics = {
+        algebra: {
+            /* Eliminamos la letra "x" de las palabras clave para evitar capturar consultas generales (como derivadas) */
+            keywords: ['ecuación', 'álgebra', 'variable'],
+            response: 'Para resolver ecuaciones de primer grado, despeja la incógnita. Por ejemplo, en 2x + 3 = 9, resta 3 a ambos lados y luego divide por 2 para obtener x = 3.',
+            practice: 'Resuelve: 3x - 5 = 10. ¿Cuál es el valor de x?'
+        },
+        geometria: {
+            keywords: ['triángulo', 'ángulo', 'geometría', 'perímetro', 'área', 'rectángulo'],
+            response: 'En geometría, el perímetro de un rectángulo se calcula sumando el doble de su ancho y largo. El área es ancho por largo. Si tienes un triángulo, recuerda que la suma de sus ángulos internos es 180°.',
+            practice: 'Calcula el área de un rectángulo de 5 cm de largo y 3 cm de ancho.'
+        },
+        funciones: {
+            keywords: ['función', 'gráfica', 'pendiente', 'parábola'],
+            response: 'Una función lineal tiene la forma f(x) = mx + b donde m es la pendiente y b es la ordenada al origen. Para trazarla, ubica el punto (0, b) y a partir de ahí aplica la pendiente.',
+            practice: 'Dibuja la gráfica de f(x) = 2x + 1 e indica su pendiente y su intercepto.'
+        },
+        probabilidad: {
+            keywords: ['probabilidad', 'dados', 'azar', 'dados', 'evento'],
+            response: 'La probabilidad de un evento es la razón entre casos favorables y casos posibles. Por ejemplo, al lanzar un dado justo, la probabilidad de obtener un 6 es 1/6.',
+            practice: 'Si lanzas una moneda dos veces, ¿cuál es la probabilidad de obtener dos caras?'
+        }
+        , conjuntos: {
+            keywords: ['conjunto', 'intersección', 'unión', 'elemento'],
+            response: 'Los conjuntos son colecciones de elementos bien definidos. La intersección A ∩ B incluye solo los elementos que pertenecen a ambos conjuntos, mientras que la unión A ∪ B combina todos los elementos de ambos conjuntos.',
+            practice: 'Dados los conjuntos A = {1,3,5} y B = {3,4,5}, calcula A ∪ B y A ∩ B.'
+        },
+        datos: {
+            keywords: ['media', 'mediana', 'moda', 'promedio', 'datos', 'estadística'],
+            response: 'En estadística, la media se calcula sumando todos los datos y dividiendo por la cantidad de elementos. La mediana es el valor central al ordenar los datos y la moda es el valor que más se repite.',
+            practice: 'Para el conjunto {2, 4, 4, 5, 6}, calcula la media, la mediana y la moda.'
+        },
+        calculo: {
+            keywords: ['derivada', 'derivar', 'integral', 'integrar', 'límite', 'cálculo'],
+            response: 'El cálculo estudia conceptos como límites, derivadas e integrales. La derivada mide la tasa de cambio instantánea de una función, mientras que la integral calcula el área bajo una curva.',
+            practice: 'Calcula la derivada de f(x) = x^3 + 2x y la integral de g(x) = 2x.'
+        }
+    };
+
+    // Historial de conversación para ChatGPT
+    const conversation = [
+      { role: 'system', content: 'Eres un tutor de matemáticas en español. Responde de forma clara, paso a paso, con empatía y ejemplos.' }
+    ];
+
+    /**
+     * Llama a la API de OpenAI para obtener una respuesta basada en el historial.
+     * Requiere que OPENAI_API_KEY esté definida en config.js.
+     * @param {string} question
+     */
+    async function fetchGPTResponse(question) {
+      // Agrega la pregunta del usuario al historial
+      conversation.push({ role: 'user', content: question });
+      try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${OPENAI_API_KEY}`
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: conversation
+          })
+        });
+        if (!response.ok) {
+          throw new Error('Error al comunicarse con OpenAI');
+        }
+        const data = await response.json();
+        const answer = data.choices[0].message.content.trim();
+        // Agrega la respuesta de la IA al historial
+        conversation.push({ role: 'assistant', content: answer });
+        return answer;
+      } catch (err) {
+        console.error(err);
+        return null;
+      }
+    }
+
+    // Función para añadir mensajes al chat
+    function addMessage(text, sender) {
+        const msg = document.createElement('div');
+        msg.classList.add('message', sender);
+        msg.textContent = text;
+        chatWindow.appendChild(msg);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    // Función para procesar la entrada del usuario
+    async function processInput(input) {
+        const lower = input.toLowerCase();
+        // Si hay una clave API, intentar con ChatGPT
+        if (typeof OPENAI_API_KEY === 'string' && OPENAI_API_KEY.trim() !== '') {
+            const aiAnswer = await fetchGPTResponse(input);
+            if (aiAnswer) {
+                return aiAnswer;
+            }
+        }
+        // Manejo específico: calcular derivadas simples de polinomios de x
+        // Si la consulta menciona "derivada" y contiene al menos una 'x', intentamos parsear una expresión
+        if (lower.includes('derivada') && lower.includes('x')) {
+            const exprMatch = input.match(/derivada(?: de)?\s*(.*)/i);
+            if (exprMatch && exprMatch[1]) {
+                // Extraer la expresión después de "derivada de"
+                let expr = exprMatch[1];
+                // Si la expresión contiene un símbolo '=' (por ejemplo f(x) = x^2), tomar la parte a la derecha
+                if (expr.includes('=')) {
+                    const parts = expr.split('=');
+                    expr = parts[1];
+                }
+                // Función auxiliar para calcular derivadas de polinomios sencillos
+                function computeDerivative(expression) {
+                    let clean = expression.replace(/\s+/g, '');
+                    // Dividir la expresión en términos considerando signos
+                    const terms = clean.match(/[+-]?[^+-]+/g);
+                    if (!terms) return null;
+                    const derivativeTerms = [];
+                    for (let term of terms) {
+                        if (term === '') continue;
+                        // Determinar el signo del término
+                        let sign = 1;
+                        if (term.startsWith('-')) {
+                            sign = -1;
+                            term = term.slice(1);
+                        } else if (term.startsWith('+')) {
+                            term = term.slice(1);
+                        }
+                        // Si el término contiene 'x'
+                        if (term.includes('x')) {
+                            // Obtener coeficiente (si existe)
+                            let coefficient = 1;
+                            const coefMatch = term.match(/^[0-9]+/);
+                            if (coefMatch) {
+                                coefficient = parseInt(coefMatch[0], 10);
+                                term = term.slice(coefMatch[0].length);
+                            }
+                            // Obtener exponente
+                            let exponent = 1;
+                            const expMatch = term.match(/\^([0-9]+)/);
+                            if (expMatch) {
+                                exponent = parseInt(expMatch[1], 10);
+                            }
+                            // Calcular derivada del término: coeficiente * exponente
+                            const newCoeff = sign * coefficient * exponent;
+                            const newExponent = exponent - 1;
+                            if (newCoeff === 0) continue;
+                            if (newExponent === 0) {
+                                derivativeTerms.push(`${newCoeff}`);
+                            } else if (newExponent === 1) {
+                                derivativeTerms.push(`${newCoeff}x`);
+                            } else {
+                                derivativeTerms.push(`${newCoeff}x^${newExponent}`);
+                            }
+                        }
+                        // Terminos constantes se ignoran porque su derivada es 0
+                    }
+                    if (derivativeTerms.length === 0) return null;
+                    // Unir los términos con el signo correcto
+                    return derivativeTerms.map((t, index) => {
+                        if (index === 0) return t;
+                        // Añadir signo explícito si el término empieza con un negativo
+                        return t.startsWith('-') ? ` ${t}` : ` + ${t}`;
+                    }).join('');
+                }
+                const derivative = computeDerivative(expr);
+                if (derivative) {
+                    return `La derivada de ${expr.trim()} es: ${derivative}.`;
+                }
+            }
+        }
+        // En caso contrario, buscar coincidencias en los temas predefinidos
+        for (const topic in tutorTopics) {
+            const { keywords, response, practice } = tutorTopics[topic];
+            if (keywords.some(k => lower.includes(k))) {
+                return `${response}\n\nEjercicio propuesto: ${practice}`;
+            }
+        }
+        // Respuesta predeterminada
+        return 'Lo siento, no logro identificar el tema específico de tu consulta. Intenta formular tu duda indicando el concepto (ejemplo: ecuaciones, triángulos, funciones).';
+    }
+
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const question = userInput.value.trim();
+        if (!question) return;
+        addMessage(question, 'user');
+        const answer = await processInput(question);
+        setTimeout(() => {
+            addMessage(answer, 'bot');
+        }, 400);
+        userInput.value = '';
+    });
+
+    // Limpia la conversación al pulsar el botón correspondiente
+    const clearBtn = document.getElementById('clear-chat');
+    clearBtn.addEventListener('click', () => {
+        chatWindow.innerHTML = '';
+        userInput.value = '';
+    });
+    </script>
+
+    <!-- Botón volver arriba -->
+    <button id="to-top" aria-label="Volver arriba">↑</button>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <p>&copy; 2025 CLQ. Construido con compromiso y pasión educativa. <br>
+        ¿Tienes preguntas? <a href="mailto:info@clq.com" style="color: #ffffff; text-decoration: underline;">Contáctanos</a></p>
+    </footer>
+
+    <!-- Script para mostrar/ocultar botón volver arriba -->
+    <script>
+    const toTopBtn = document.getElementById('to-top');
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            toTopBtn.style.display = 'flex';
+        } else {
+            toTopBtn.style.display = 'none';
+        }
+    });
+    toTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+</body>
+</html>

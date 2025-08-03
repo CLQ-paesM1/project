@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instrucciones de Uso – CLQ</title>
+    <link rel="stylesheet" href="simulador.css">
+    <!-- Tipografía Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="instructions-page">
+    <!-- Barra de navegación principal -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="assets/logos/clq-logo.png" alt="CLQ" class="logo-img">
+                <span>CLQ</span>
+            </div>
+            <div class="navbar-links">
+                <a href="index.html">Inicio</a>
+                <a href="simulador.html">Simulador</a>
+                <a href="tutor.html">Tutor</a>
+                <a href="instrucciones.html" class="active">Instrucciones</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="faq.html">Preguntas</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+        </div>
+    </nav>
+    <header class="sim-header">
+        <h1>Cómo utilizar CLQ</h1>
+        <p class="intro">Sigue estas instrucciones para aprovechar al máximo el simulador y el tutor.</p>
+    </header>
+    <main class="instructions-container">
+        <section>
+            <h2>1. Simulador PAES</h2>
+            <ul>
+                <li>Cada simulación genera hasta <strong>20 preguntas</strong> de selección múltiple basadas en el temario oficial. Puedes filtrar por tema si deseas enfocarte en un área.</li>
+                <li>Elige el <strong>modo ensayo</strong> para responder en 40 minutos con corrección al final, o el <strong>modo práctica</strong> para tomarte tu tiempo y obtener retroalimentación inmediata en cada respuesta.</li>
+                <li>Durante el modo ensayo, puedes reiniciar el cronómetro utilizando el botón de reinicio al lado del contador de tiempo.</li>
+                <li>Utiliza la barra de navegación superior para volver rápidamente a la portada del sitio.</li>
+                <li>Lee cada pregunta con calma y cambia de respuesta si lo necesitas antes de finalizar.</li>
+                <li>Al pulsar <em>Finalizar</em>, recibirás una corrección automática con una tabla de aciertos y errores, un gráfico comparativo y explicaciones detalladas.</li>
+                <li>En la parte superior verás una barra de progreso y, tras finalizar, tu resultado se guardará en el historial para que puedas seguir tu evolución.</li>
+                <li>Para practicar más, elige <em>Generar otro ensayo</em> y se cargará un nuevo set de preguntas aleatorias.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>2. Tutor Matemático</h2>
+            <ul>
+                <li>Accede al tutor para hacer preguntas en lenguaje natural sobre cualquier tema de matemáticas.</li>
+                <li>Recibirás una respuesta estructurada paso a paso. Si el tutor detecta el tema, te propondrá un ejercicio adicional.</li>
+                <li>Formula dudas concretas (por ejemplo: “¿Cómo encuentro el área de un triángulo?”) para obtener mejores explicaciones.</li>
+                <li>Si dispones de una <strong>clave API de OpenAI</strong>, puedes incluirla en el archivo <code>config.js</code> para que el tutor utilice ChatGPT y genere respuestas completamente personalizadas. Si no la incluyes, el tutor seguirá utilizando respuestas preprogramadas.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>3. Consejos de Estudio</h2>
+            <ul>
+                <li>Practica con regularidad para fortalecer tu confianza y familiarizarte con el formato de la PAES.</li>
+                <li>Identifica tus temas débiles y repásalos con la ayuda del tutor y material de apoyo.</li>
+                <li>Gestiona tu tiempo durante el simulador; si una pregunta te toma mucho, continúa y vuelve al final.</li>
+                <li>Mantén una actitud positiva y descansos adecuados para favorecer tu aprendizaje.</li>
+            </ul>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 CLQ. Construido con compromiso y pasión educativa. <br>
+        ¿Tienes preguntas? <a href="mailto:info@clq.com" style="color: #ffffff; text-decoration: underline;">Contáctanos</a></p>
+    </footer>
+
+    <!-- Botón volver arriba -->
+    <button id="to-top" aria-label="Volver arriba">↑</button>
+
+    <!-- Script para mostrar/ocultar botón volver arriba -->
+    <script>
+    const toTopBtn = document.getElementById('to-top');
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            toTopBtn.style.display = 'flex';
+        } else {
+            toTopBtn.style.display = 'none';
+        }
+    });
+    toTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+</body>
+</html>

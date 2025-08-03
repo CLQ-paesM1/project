@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre CLQ – Plataforma Educativa</title>
+    <link rel="stylesheet" href="simulador.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="about-page">
+    <!-- Barra de navegación principal -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="assets/logos/clq-logo.png" alt="CLQ" class="logo-img">
+                <span>CLQ</span>
+            </div>
+            <div class="navbar-links">
+                <a href="index.html">Inicio</a>
+                <a href="simulador.html">Simulador</a>
+                <a href="tutor.html">Tutor</a>
+                <a href="instrucciones.html">Instrucciones</a>
+                <a href="nosotros.html" class="active">Nosotros</a>
+                <a href="faq.html">Preguntas</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+        </div>
+    </nav>
+    <header class="page-header">
+        <div class="header-content">
+            <div class="header-emoji" role="img" aria-label="Nuestra empresa">🏢</div>
+            <h1>Sobre CLQ</h1>
+            <p>Conoce nuestra visión, misión y valores.</p>
+        </div>
+    </header>
+    <main class="instructions-container">
+        <section>
+            <h2>Quiénes somos</h2>
+            <p>CLQ nace de la unión de educadores y desarrolladores apasionados por llevar la educación de calidad a todos los rincones de Chile. Como una empresa con experiencia en el ámbito tecnológico y académico, diseñamos herramientas que combinan rigor pedagógico y usabilidad.</p>
+            <p>Desde nuestros inicios hemos trabajado para ofrecer una experiencia de aprendizaje que motive, oriente y prepare a los estudiantes de enseñanza media para la PAES Matemática 1. Nuestro equipo está comprometido con la innovación y la inclusión educativa.</p>
+        </section>
+        <section>
+            <h2>Nuestra misión</h2>
+            <p>Inspirar a cada estudiante chileno a alcanzar su máximo potencial en Matemática&nbsp;PAES a través de una plataforma inclusiva, gratuita y de calidad. Queremos ser un puente entre la educación y el futuro, brindando recursos que transformen el aprendizaje en oportunidades reales.</p>
+        </section>
+        <section>
+            <h2>Nuestra visión</h2>
+            <p>Convertirnos en la plataforma educativa de referencia en Chile y Latinoamérica, reconocida por la excelencia de sus contenidos, su impacto social y su capacidad de adaptación a las necesidades de cada estudiante.</p>
+        </section>
+        <section>
+            <h2>Nuestros valores</h2>
+            <ul>
+                <li><strong>Accesibilidad:</strong> creemos que la educación debe estar al alcance de todos, sin importar su ubicación o situación económica.</li>
+                <li><strong>Calidad:</strong> desarrollamos contenido riguroso y actualizado, alineado con el currículum oficial.</li>
+                <li><strong>Innovación:</strong> incorporamos tecnologías de vanguardia para ofrecer experiencias de aprendizaje eficientes y atractivas.</li>
+                <li><strong>Compromiso social:</strong> trabajamos para reducir las brechas educativas y fomentar la equidad.</li>
+            </ul>
+        </section>
+    </main>
+    <!-- Botón volver arriba -->
+    <button id="to-top" aria-label="Volver arriba">↑</button>
+    <!-- Pie de página -->
+    <footer class="footer">
+        <p>&copy; 2025 CLQ. Construido con compromiso y pasión educativa. <br>
+        ¿Tienes preguntas? <a href="mailto:info@clq.com" style="color: #ffffff; text-decoration: underline;">Contáctanos</a></p>
+    </footer>
+    <script>
+    const toTopBtn = document.getElementById('to-top');
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            toTopBtn.style.display = 'flex';
+        } else {
+            toTopBtn.style.display = 'none';
+        }
+    });
+    toTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+</body>
+</html>

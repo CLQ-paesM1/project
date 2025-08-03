@@ -1,0 +1,961 @@
+/*
+ * Hoja de estilos unificada para la plataforma CLQ. Diseña la experiencia
+ * visual de la página de inicio, simulador, tutor e instrucciones.
+ */
+
+/* Importar tipografía moderna de Google */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Variables de color para fácil personalización */
+:root {
+  /* Paleta corporativa más sobria y profesional */
+  --clr-primary: #004bad;     /* azul profundo para encabezados y elementos principales */
+  --clr-accent: #0077ff;     /* azul brillante para acentos y botones */
+  --clr-secondary: #f7faff;  /* fondo muy claro con ligero tinte azul */
+  --clr-highlight: #e8f2ff;  /* tono sutil para resaltar secciones */
+  --clr-text: #2c3e50;       /* gris oscuro para mejor legibilidad */
+  --clr-white: #ffffff;      /* blanco puro */
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  /* Utilizamos la familia Poppins para un aspecto moderno y profesional */
+  font-family: 'Poppins', sans-serif;
+  color: var(--clr-text);
+  background-color: var(--clr-secondary);
+  line-height: 1.6;
+}
+
+/* Botones reutilizables */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  margin: 0.2rem;
+  background-color: var(--clr-primary);
+  color: var(--clr-white);
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: var(--clr-accent);
+}
+
+.btn.secondary {
+  background-color: transparent;
+  color: var(--clr-primary);
+  border: 2px solid var(--clr-primary);
+}
+
+.btn.secondary:hover,
+.btn.secondary:focus {
+  background-color: var(--clr-primary);
+  color: var(--clr-white);
+}
+
+/* Ajustes de color para los botones secundarios dentro del hero */
+header.hero .btn.secondary {
+  color: var(--clr-accent);
+  border-color: var(--clr-accent);
+}
+
+header.hero .btn.secondary:hover,
+header.hero .btn.secondary:focus {
+  background-color: var(--clr-accent);
+  color: var(--clr-white);
+}
+
+/* Estilos generales de encabezados y secciones */
+h1, h2, h3 {
+  margin-top: 0;
+  color: var(--clr-primary);
+}
+
+header.hero {
+  position: relative;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--clr-white);
+  /* Fondo con degradado corporativo. Eliminamos imágenes para utilizar emojis en su lugar */
+  background-image: linear-gradient(135deg, rgba(10, 108, 240, 0.9) 0%, rgba(0, 168, 255, 0.9) 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+header.hero .overlay {
+  /* Fondo semitransparente para resaltar el texto sobre la imagen */
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 700px;
+}
+
+header.hero .brand {
+  color: var(--clr-accent);
+}
+
+header.hero .tagline {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Emoji decorativo dentro del hero */
+.hero-emoji {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+  color: var(--clr-accent);
+}
+
+.cta-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Sección de características */
+.features {
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.features h2 {
+  margin-bottom: 1.2rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.feature-item {
+  background-color: var(--clr-white);
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover sutil para tarjetas de características */
+.feature-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+}
+
+/* Ajustar tamaño de los íconos de las características para evitar desbordes */
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 0.8rem;
+}
+
+/* Para cuando se usan emojis en lugar de imágenes */
+.feature-emoji {
+  display: none; /* Eliminado en favor de círculos de íconos */
+}
+
+/* Círculo decorativo que envuelve cada icono/emoji de las características */
+.icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+  background-image: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+  color: var(--clr-white);
+  font-size: 2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.12);
+}
+
+.feature-item h3 {
+  margin-bottom: 0.5rem;
+  color: var(--clr-primary);
+}
+
+.footer {
+  background-color: var(--clr-primary);
+  color: var(--clr-white);
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+/* Estilos del simulador */
+.simulador-page .sim-header {
+  /* Utilizamos un degradado para dar profundidad al encabezado del simulador */
+  background-image: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-accent) 100%);
+  color: var(--clr-white);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.sim-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.sim-header .timer {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+/* Ajustes de colores para botones de cabecera en fondo oscuro */
+.sim-header .home-btn,
+.sim-header .reset-btn {
+  border-color: var(--clr-white);
+  color: var(--clr-white);
+}
+.sim-header .home-btn:hover,
+.sim-header .home-btn:focus,
+.sim-header .reset-btn:hover,
+.sim-header .reset-btn:focus {
+  background-color: var(--clr-white);
+  color: var(--clr-primary);
+}
+
+/* Contenedor para cronómetro y botón de reinicio */
+.timer-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Botón de reinicio de cronómetro */
+.reset-btn {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+/* Botón inicio (en header del simulador) */
+.home-btn {
+  margin-right: 0.6rem;
+}
+
+/* Controles dentro del encabezado del simulador (tema) */
+.sim-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: auto;
+}
+
+.sim-controls label {
+  color: var(--clr-white);
+  font-weight: 600;
+}
+
+.sim-controls select {
+  padding: 0.4rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  min-width: 120px;
+}
+
+/* Estilo para el selector de modo (ensayo/práctica) */
+.sim-controls select#mode-select {
+  min-width: 140px;
+}
+
+/* Barra de progreso */
+#progress-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#progress-wrapper .progress-bar {
+  flex: 1;
+  height: 8px;
+  background-color: #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#progress-inner {
+  height: 100%;
+  width: 0;
+  background-color: var(--clr-accent);
+  transition: width 0.3s ease;
+}
+
+#progress-text {
+  font-weight: 600;
+  color: var(--clr-primary);
+}
+
+#exam-container {
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+.question {
+  background-color: var(--clr-white);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.question h3 {
+  margin-top: 0;
+  color: var(--clr-primary);
+}
+
+.question ul {
+  list-style: none;
+  padding: 0;
+}
+
+.question li {
+  margin: 0.3rem 0;
+}
+
+.question label {
+  cursor: pointer;
+}
+
+.sim-actions {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+/* Resultados */
+.results-section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.results-section table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--clr-white);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.results-section th,
+.results-section td {
+  padding: 0.6rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.results-section th {
+  background-color: var(--clr-primary);
+  color: var(--clr-white);
+}
+
+/* Estilos para la retroalimentación inmediata en modo práctica */
+.feedback {
+  margin-top: 0.4rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.feedback.correct {
+  color: #2e7d32; /* tono verde para respuestas correctas */
+}
+.feedback.incorrect {
+  color: #d32f2f; /* tono rojo para respuestas incorrectas */
+}
+
+/* Estilos para el gráfico de resultados */
+.chart-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-bars {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  height: 1rem;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #e0e0e0;
+  margin-bottom: 0.4rem;
+}
+
+.chart-bars .bar {
+  height: 100%;
+}
+
+.chart-bars .bar.correct {
+  background-color: var(--clr-primary);
+}
+
+.chart-bars .bar.incorrect {
+  background-color: #e57373;
+}
+
+.chart-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 400px;
+  font-size: 0.9rem;
+}
+
+/* Historial de ensayos */
+#history {
+  margin-top: 1rem;
+}
+
+#history h3 {
+  margin-bottom: 0.5rem;
+  color: var(--clr-primary);
+}
+
+#history ul {
+  list-style: disc;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+#history li {
+  margin-bottom: 0.4rem;
+}
+
+.explanation-row td {
+  background-color: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Estilo para detalles de soluciones en la tabla de resultados */
+.results-section details {
+  background-color: var(--clr-highlight);
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  margin-top: 0.4rem;
+  border-left: 4px solid var(--clr-primary);
+}
+
+.results-section details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--clr-primary);
+  margin-bottom: 0.3rem;
+  outline: none;
+}
+
+/* Colorea las filas de la tabla de resultados según la respuesta */
+.results-section tr.correct-row td {
+  background-color: #e8f7e9;
+}
+
+.results-section tr.incorrect-row td {
+  background-color: #fdecea;
+}
+
+.results-section tr.correct-row td:nth-child(3) {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.results-section tr.incorrect-row td:nth-child(3) {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.results-section tr.incorrect-row td:nth-child(4) {
+  font-weight: 600;
+}
+
+.results-section details[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+details summary {
+  cursor: pointer;
+  color: var(--clr-primary);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+/* Estilos del tutor */
+.tutor-page .tutor-container {
+  max-width: 700px;
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+}
+
+.chat-window {
+  flex: 1;
+  padding: 1rem;
+  background-color: var(--clr-white);
+  border-radius: 6px;
+  overflow-y: auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.message {
+  margin-bottom: 0.8rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message.user {
+  background-color: var(--clr-accent);
+  color: var(--clr-white);
+  align-self: flex-end;
+}
+
+.message.bot {
+  background-color: #e8f4fa;
+  color: var(--clr-text);
+  align-self: flex-start;
+}
+
+.chat-form {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.chat-form input[type="text"] {
+  flex: 1;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.chat-form button {
+  flex-shrink: 0;
+}
+
+/* Tamaño reducido para botones secundarios pequeños */
+.btn.small {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+/* Estilos de la página de instrucciones */
+.instructions-container {
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: var(--clr-white);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.instructions-container section {
+  margin-bottom: 1.5rem;
+}
+
+.instructions-container h2 {
+  color: var(--clr-primary);
+  margin-bottom: 0.6rem;
+}
+
+.instructions-container ul {
+  padding-left: 1.2rem;
+  margin: 0;
+}
+
+.instructions-container li {
+  margin-bottom: 0.6rem;
+}
+
+/* -------------------------------------------------- */
+/*  Barra de navegación principal  */
+/* -------------------------------------------------- */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--clr-white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 44px;
+  width: auto;
+  margin-right: 0.6rem;
+}
+
+/* Estilo para el emoji del logo */
+.navbar-logo .logo-emoji {
+  font-size: 1.8rem;
+  margin-right: 0.5rem;
+  line-height: 1;
+}
+
+.navbar-logo span {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--clr-primary);
+}
+
+.navbar-links a {
+  margin-left: 1rem;
+  color: var(--clr-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+  color: var(--clr-primary);
+}
+
+.navbar-links a.active {
+  color: var(--clr-primary);
+  border-bottom: 2px solid var(--clr-primary);
+}
+
+/* Botón de volver arriba */
+#to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--clr-primary);
+  color: var(--clr-white);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.4rem;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+#to-top:hover {
+  background-color: var(--clr-accent);
+}
+
+/* -------------------------------------------------- */
+/*  Sección Por qué CLQ (index)  */
+/* -------------------------------------------------- */
+.why-clq {
+  padding: 3rem 1rem;
+  background-color: var(--clr-secondary);
+  text-align: center;
+}
+
+.why-clq h2 {
+  color: var(--clr-primary);
+  margin-bottom: 2rem;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.why-item {
+  background-color: var(--clr-white);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.why-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+}
+
+.why-item h3 {
+  color: var(--clr-primary);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.why-item p {
+  color: var(--clr-text);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+/* -------------------------------------------------- */
+/*  Sección de Misión (index)  */
+/* -------------------------------------------------- */
+
+.mission {
+  padding: 3rem 1rem;
+  background-color: var(--clr-highlight);
+  text-align: center;
+}
+
+.mission-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.mission-image {
+  flex: 1 1 250px;
+  max-width: 300px;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mission-text {
+  flex: 2 1 300px;
+  text-align: left;
+}
+
+.mission-text h2 {
+  color: var(--clr-primary);
+  margin-bottom: 0.5rem;
+}
+
+.mission-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--clr-text);
+}
+
+/* Emoji decorativo para la sección de misión */
+.mission-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+/* -------------------------------------------------- */
+/*  Encabezado del tutor (tutor.html)  */
+/* -------------------------------------------------- */
+
+.tutor-page .tutor-header {
+  position: relative;
+  color: var(--clr-white);
+  text-align: center;
+  padding: 3rem 1rem;
+  /* Imagen de fondo con degradado para un aspecto corporativo */
+  /* Mantenemos solo el degradado, sin imagen de fondo */
+  background-image: linear-gradient(135deg, rgba(10,108,240,0.9) 0%, rgba(0,168,255,0.9) 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+.tutor-header .header-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.tutor-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--clr-white);
+}
+
+.tutor-header p {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  color: var(--clr-secondary);
+}
+
+/* Emoji decorativo en el encabezado del tutor */
+.header-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* -------------------------------------------------- */
+/*  Encabezados genéricos para páginas informativas (nosotros, faq, contacto) */
+/* -------------------------------------------------- */
+.page-header {
+  position: relative;
+  color: var(--clr-white);
+  text-align: center;
+  padding: 3rem 1rem;
+  background-image: linear-gradient(135deg, rgba(10,108,240,0.9) 0%, rgba(0,168,255,0.9) 100%);
+  background-size: cover;
+  background-position: center;
+}
+
+.page-header .header-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: var(--clr-white);
+}
+
+.page-header p {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  color: var(--clr-secondary);
+}
+
+/* Emoji decorativo para encabezados de páginas */
+.page-header .header-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Estilos para secciones de preguntas frecuentes */
+.faq-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.faq-item {
+  margin-bottom: 1rem;
+  background-color: var(--clr-white);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+  background-color: var(--clr-primary);
+  color: var(--clr-white);
+  list-style: none;
+}
+
+.faq-item[open] summary {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.faq-item p {
+  padding: 0.8rem 1rem;
+  margin: 0;
+  color: var(--clr-text);
+  line-height: 1.5;
+}
+
+/* -------------------------------------------------- */
+/*  Formulario de contacto */
+/* -------------------------------------------------- */
+.contact-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background-color: var(--clr-white);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+
+.contact-container h2 {
+  color: var(--clr-primary);
+  margin-top: 0;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form label {
+  font-weight: 600;
+  margin-top: 0.8rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
+
+.contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contact-form button {
+  margin-top: 1rem;
+  align-self: flex-start;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  header.hero {
+    height: 60vh;
+  }
+  .sim-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .sim-header .timer {
+    margin-top: 0.5rem;
+  }
+
+  /* Ajustar el menú de navegación en pantallas pequeñas */
+  .navbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .navbar-links {
+    margin-top: 0.5rem;
+  }
+}

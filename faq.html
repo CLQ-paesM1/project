@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Frecuentes – CLQ</title>
+    <link rel="stylesheet" href="simulador.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="faq-page">
+    <!-- Barra de navegación principal -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="assets/logos/clq-logo.png" alt="CLQ" class="logo-img">
+                <span>CLQ</span>
+            </div>
+            <div class="navbar-links">
+                <a href="index.html">Inicio</a>
+                <a href="simulador.html">Simulador</a>
+                <a href="tutor.html">Tutor</a>
+                <a href="instrucciones.html">Instrucciones</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="faq.html" class="active">Preguntas</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+        </div>
+    </nav>
+    <header class="page-header">
+        <div class="header-content">
+            <div class="header-emoji" role="img" aria-label="Preguntas">❓</div>
+            <h1>Preguntas Frecuentes</h1>
+            <p>Encuentra respuestas a las dudas más comunes sobre CLQ y la PAES.</p>
+        </div>
+    </header>
+    <main class="faq-container">
+        <details class="faq-item">
+            <summary>¿Qué es la PAES Matemática 1?</summary>
+            <p>La Prueba de Acceso a la Educación Superior (PAES) evalúa competencias y conocimientos fundamentales para ingresar a la universidad. La PAES Matemática 1 mide habilidades en álgebra, geometría, funciones, probabilidades y datos.</p>
+        </details>
+        <details class="faq-item">
+            <summary>¿Cómo funciona el simulador de CLQ?</summary>
+            <p>El simulador genera hasta 20 preguntas de selección múltiple basadas en el temario oficial. Puedes elegir entre el modo ensayo (cronómetro de 40 minutos) y el modo práctica (sin límite de tiempo y con retroalimentación inmediata). Al finalizar recibes un resumen con resultados, gráfico comparativo e historial de intentos.</p>
+        </details>
+        <details class="faq-item">
+            <summary>¿Para qué sirve el tutor matemático?</summary>
+            <p>El tutor IA te ayuda a resolver dudas en lenguaje natural y te explica paso a paso conceptos de álgebra, geometría, funciones, probabilidades, conjuntos y cálculo. Si conectas tu clave de OpenAI en <code>config.js</code>, el tutor utilizará un modelo GPT para responder cualquier pregunta.</p>
+        </details>
+        <details class="faq-item">
+            <summary>¿Necesito registrarme para usar CLQ?</summary>
+            <p>No, CLQ es una plataforma abierta y gratuita. Todas sus funciones están disponibles sin registro. En futuras versiones podrás crear un perfil para almacenar tus avances y recibir recomendaciones personalizadas.</p>
+        </details>
+    </main>
+    <!-- Botón volver arriba -->
+    <button id="to-top" aria-label="Volver arriba">↑</button>
+    <!-- Pie de página -->
+    <footer class="footer">
+        <p>&copy; 2025 CLQ. Construido con compromiso y pasión educativa. <br>
+        ¿Tienes preguntas? <a href="mailto:info@clq.com" style="color: #ffffff; text-decoration: underline;">Contáctanos</a></p>
+    </footer>
+    <script>
+    const toTopBtn = document.getElementById('to-top');
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            toTopBtn.style.display = 'flex';
+        } else {
+            toTopBtn.style.display = 'none';
+        }
+    });
+    toTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+</body>
+</html>

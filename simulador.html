@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador PAES Matemática 1 – CLQ</title>
+    <link rel="stylesheet" href="simulador.css">
+    <!-- Tipografía Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="simulador-page">
+    <!-- Barra de navegación principal -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <img src="assets/logos/clq-logo.png" alt="CLQ" class="logo-img">
+                <span>CLQ</span>
+            </div>
+            <div class="navbar-links">
+                <a href="index.html">Inicio</a>
+                <a href="simulador.html" class="active">Simulador</a>
+                <a href="tutor.html">Tutor</a>
+                <a href="instrucciones.html">Instrucciones</a>
+                <a href="nosotros.html">Nosotros</a>
+                <a href="faq.html">Preguntas</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+        </div>
+    </nav>
+    <header class="sim-header">
+        <h1>Simulador PAES Matemática 1</h1>
+        <!-- Controles del simulador: regreso al inicio, selección de tema, modo y temporizador -->
+        <div class="sim-controls">
+            <label for="topic-select">Tema:</label>
+            <select id="topic-select" aria-label="Seleccionar tema">
+                <!-- Las opciones se generarán dinámicamente en el script -->
+            </select>
+            <label for="mode-select">Modo:</label>
+            <select id="mode-select" aria-label="Seleccionar modo">
+                <option value="exam">Ensayo</option>
+                <option value="practice">Práctica</option>
+            </select>
+        </div>
+        <div class="timer-wrapper">
+            <div class="timer" id="timer">40:00</div>
+            <!-- Botón para reiniciar el cronómetro en modo ensayo -->
+            <button id="reset-timer" class="btn secondary small reset-btn" title="Reiniciar cronómetro">⟳</button>
+        </div>
+    </header>
+    <!-- Indicador de progreso -->
+    <div id="progress-wrapper">
+        <span id="progress-text">0/0 respondidas</span>
+        <div class="progress-bar">
+            <div id="progress-inner"></div>
+        </div>
+    </div>
+    <main id="exam-container">
+        <!-- Las preguntas se inyectarán aquí mediante JS -->
+    </main>
+    <div class="sim-actions">
+        <button id="finish-btn" class="btn">Finalizar</button>
+        <button id="new-btn" class="btn secondary" style="display:none">Generar otro ensayo</button>
+    </div>
+    <!-- Contenedor de resultados -->
+    <section id="results-section" class="results-section" style="display:none">
+        <h2>Resultados</h2>
+        <p id="score"></p>
+        <table id="results-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Pregunta</th>
+                    <th>Tu Respuesta</th>
+                    <th>Correcta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas dinámicas -->
+            </tbody>
+        </table>
+        <!-- Contenedor de gráfico de resultados -->
+        <div id="chart-container" class="chart-container"></div>
+        <!-- Historial de ensayos -->
+        <div id="history"></div>
+    </section>
+    <!-- Script de lógica -->
+    <script src="simulador.js"></script>
+
+    <!-- Botón volver arriba -->
+    <button id="to-top" aria-label="Volver arriba">↑</button>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+        <p>&copy; 2025 CLQ. Construido con compromiso y pasión educativa. <br>
+        ¿Tienes preguntas? <a href="mailto:info@clq.com" style="color: #ffffff; text-decoration: underline;">Contáctanos</a></p>
+    </footer>
+
+    <!-- Script para mostrar/ocultar botón volver arriba -->
+    <script>
+    const toTopBtn = document.getElementById('to-top');
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            toTopBtn.style.display = 'flex';
+        } else {
+            toTopBtn.style.display = 'none';
+        }
+    });
+    toTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    </script>
+</body>
+</html>
